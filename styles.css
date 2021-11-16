@@ -1,0 +1,47 @@
+body {
+    background-color: #0D0208;
+    color: #008F11;
+    font-family: monospace;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+pre {
+    background-color: #003B00;
+    color: #00FF41;
+    font-family: monospace;
+
+    padding: 2em 3em 2em 3em;
+    max-width: 80%;
+    white-space: pre-wrap;
+}
+
+a:link {
+    color: #00FF41;
+}
+
+a:visited {
+    color: #00FF41;
+}
+
+a:hover {
+    color: #00FF41;
+}
+
+a:active {
+    color: #00FF41;
+}
+
+input {
+    background-color: #003B00;
+    border: solid 1px #008F11;
+    color: #00FF41;
+}
+
+input[type=submit] {
+    background-color: #008F11;
+    border: solid 1px #008F11;
+    color: #0D0208;
+}
