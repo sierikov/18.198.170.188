@@ -2,13 +2,17 @@ body {
     background-color: #0D0208;
     color: #008F11;
     font-family: monospace;
-
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-pre {
+p {
+    max-width: 780px;
+    text-align: center;
+}
+
+pre, code {
     background-color: #003B00;
     color: #00FF41;
     font-family: monospace;
