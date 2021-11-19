@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 2</title>
+</head>
+<body>
+<h1>Level 2</h1>
+<h2>Kawoosh!</h2>
+<h3>Solution</h3>
+<p>
+  First, we will open the dev tools (<kbd>f12</kbd>) as earlier.
+  We see the following structure:
+</p>
+<code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt
+  &lt;title&gt;Code Quest - Level 2&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Level 2&lt;/h1&gt;
+  &lt;h2&gt;Kawoosh!&lt;/h2&gt;
+  &lt;p&gt;Congratulations, you made it to level 2.&lt;/p&gt;
+  &lt;p&gt;Unfortunately this level is broken. Fix it to continue your path.&lt;/p&gt;
+  &lt;script&gt;
+    var secretUrl = btoa("YWxsLXlvdXItYmFzZTY0LWFyZS1iZWxvbmctdG8tdXM=");
+    document.write("&lt;p&gt;Solution is at &lt;a href='" + secretUrl + "'&gt;/" + secretUrl + "&lt;/a&gt; (with the previous port)&lt;/p&gt;");
+  &lt;script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code>
+<p>The most structure is as in the previous level, but now we have script.</p>
+<code>
+&lt;script&gt;
+  var secretUrl = btoa("YWxsLXlvdXItYmFzZTY0LWFyZS1iZWxvbmctdG8tdXM=");
+  document.write("&lt;p&gt;Solution is at &lt;a href='" + secretUrl + "'&gt;/" + secretUrl + "&lt;/a&gt; (with the previous port)&lt;/p&gt;");
+&lt;script&gt;
+</code>
+<p>
+  So  <code>secretUrl</code> contains encoded in base64 string. Maybe this is
+  our key to the next level.And then the script adds this <code>secretUrl</code>
+  to the webpage as link with the additional text.
+</p>
+<p>
+  Let's decode our string. We take <code>YWxsLXlvdXItYmFzZTY0LWFyZS1iZWxvbmctdG8tdXM=</code>. <br>
+  Go to the <a href="https://www.base64decode.org/" target="_blank">any online decoder</a>,
+  paste and press 'Decode'. And..
+</p>
+<p>
+  The result of decoding is <code>all-your-base64-are-belong-to-us</code>. <br>
+  Let's add to it <code>/</code> and change the port back to <code>80</code>
+  as was in the instructions said.
+</p>
+<p>
+  So our result url will be: <br>
+  <code>http://18.198.170.188:80/all-your-base64-are-belong-to-us</code>
+</p>
+<p>
+  If we go to this url we will see <br>
+  <a href="./all-your-base64-are-belong-to-us.html">congratulations page</a> whith the link to the
+  Level 3
+  (
+    <a href="../with-a-little-help-from-my-friends/">task</a> /
+    <a href="../with-a-little-help-from-my-friends/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
