@@ -12,6 +12,10 @@ p {
     text-align: center;
 }
 
+p code {
+    padding: 0px 10px;
+}
+
 pre, code {
     background-color: #003B00;
     color: #00FF41;
