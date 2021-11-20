@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 2</title>
+</head>
+<body>
+<h1>Level 3</h1>
+<h2>With a little help from my friends</h2>
+<h3>Solution</h3>
+<p>
+  If we open the dev tools (<kbd>f12</kbd>) as earlier we will not see
+  anything interesting. There are: header, paragraph, some text and a
+  submit form. This form send basic <code>HTTP</code> request with
+  <code>token</code> argument to the server.
+</p>
+<p>
+  Let's try to paste the same token as we have <br>
+  <pre>CkMV20no7/ac8nwQnmU9j3W2dD07/csl5RNp8rBj3ibhOOTgGHMopGS4Ff2FFjnYUSvaZqnCf2A3TBBhm95T3tMzlGm+i1e3NE35D32xt2s=</pre>
+</p>
+<p>
+  Now we see the error message on the top of the page.<br>
+  <pre>
+    I assume you used your own token or your friend is not remote enough.
+  </pre>
+  Okay. Let's request this page again with
+  <a href="https://www.hidemyass-freeproxy.com/" target="_blank">
+    any anonymous browsing utility
+  </a>
+</p>
+<p>
+  Now we have another token:
+  <pre>
+    CkMV20no7/ac8nwQnmU9j3W2dD07/csl5RNp8rBj3ibhOOTgGHMopGS4Ff2FFjnYUSvaZqnCf2A3TBBhm95T3tMzlGm+i1e3NE35D32xt2s=
+  </pre>
+  Let's try.
+</p>
+<p>Nice, now we have a new message on the top of the page</p>
+<pre>
+  Thank you for your friend's token. Continue with the <a href="">next level</a>.
+</pre>
+<p>
+  The <code>next level</code> takes us to the <b>Level 4</b>
+  (<a href="../we-love-u/">task</a> /
+  <a href="../we-love-u/solution.html">solution</a>)
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
