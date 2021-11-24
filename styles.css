@@ -7,8 +7,11 @@ body {
     align-items: center;
 }
 
-p {
+p, img.solution {
     max-width: 780px;
+}
+
+p {
     text-align: center;
 }
 

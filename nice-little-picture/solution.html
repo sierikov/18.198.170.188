@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 5</title>
+</head>
+<body>
+<h1>Level 5</h1>
+<h2>Nice little picture</h2>
+<h3>Solution</h3>
+<p>
+  The description of the level says, that there is an image on the page.
+  So let's open dev tools and check this.
+</p>
+<p>
+  In the document structure we see the invisible image encoded in <code>base64</code>
+  format.
+</p>
+<img class="solution" src="../assets/img/invisible.png">
+<p>Right click in the center of the page -> Save as anywhere you want. </p>
+<p>
+  So we have an image. In the properties we see that this image is in <code>RGBA</code>
+  format. So some information can be hidden with help of <code>Alpha-channel</code>.
+</p>
+<p>
+  So let's grab
+  <a href="https://www.online-image-editor.com/" target="_blank">
+    any online image editor
+  </a>
+  and apply color change.
+</p>
+<img class="solution" src="../assets/img/two-shades-of-black.png" width="640">
+<p>
+  So <code>/two-shades-of-black</code> is our result. <br>
+</p>
+<p>
+  So our result url will be: <br>
+  <code>http://18.198.170.188:80/two-shades-of-black</code>
+</p>
+<p>
+  If we go to this url we will see
+  <a href="two-shades-of-black.html">congratulations page</a> <br>
+  whith the link to the Level 6
+  (
+    <a href="../braowwwwn/">task</a> /
+    <a href="../braowwwwn/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
