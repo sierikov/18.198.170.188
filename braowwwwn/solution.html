@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 6</title>
+</head>
+<body>
+<h1>Level 6</h1>
+<h2>Braowwwwn...</h2>
+<h3>Solution</h3>
+<p>
+  First, we will open the dev tools (<kbd>f12</kbd>) as earlier.
+  We see standart HTML structure, but if we look closer we can notice
+  unusual formation inside <code>p</code> tag:
+</p>
+<pre>
+&lt;p&gt;
+  &lt;span&gt;
+    Perseverance, you have!
+    &lt;span&gt;
+      Good! Another
+      &lt;spin&gt;sense&lt;/spin&gt;
+      you need to use.
+    &lt;/span&gt;
+    Think you must.
+  &lt;/span&gt;
+&lt;/p&gt;
+</pre>
+<p>
+  The most interesting is this <code>spin</code> tag. It is a hint to something.
+</p>
+<p>
+  Now let's play the audio file. Well.. there is just a loud sound. So let's go
+  deeper.
+</p>
+<p>
+  Using <code>exiftool</code> we can list all info about this file.
+</p>
+<pre>
+ExifTool Version Number         : 12.30
+File Name                       : download.mp3
+Directory                       : /tmp/
+File Size                       : 62 KiB
+File Permissions                : -rw-r--r--
+File Type                       : MP3
+File Type Extension             : mp3
+MIME Type                       : audio/mpeg
+MPEG Audio Version              : 2
+Audio Layer                     : 3
+Audio Bitrate                   : 160 kbps
+Sample Rate                     : 22050
+Channel Mode                    : Joint Stereo
+MS Stereo                       : On
+Intensity Stereo                : Off
+Copyright Flag                  : False
+Original Media                  : True
+Emphasis                        : None
+Encoder                         : LAME3.100.n4
+ID3 Size                        : 60
+Year                            : 7da
+Warning                         : [minor] Frame 'TDRC' is not valid for this ID3 version
+Recording Time                  : 7da
+Artist                          : German Room
+Date/Time Original              : 7da
+Duration                        : 3.16 s (approx)
+</pre>
+<p>
+  Okay. There are two-three interesting fields here. They are:
+</p>
+<ul>
+  <li>Artist - German room</li>
+  <li>Recording time - 7da</li>
+</ul>
+<p>
+  When we search for <code>German room</code> there is literally nothing. <br>
+  Only thing we can use - <code>Room</code> in German is <code>Zimmer</code>.
+</p>
+<p>
+  The sound from audiofile is very alike to <code>Hans Zimmer</code> soundtracks.
+</p>
+<p>
+  So it can be any film with Hans Zimmer as Compositor.
+</p>
+<p>
+  So I tried all films with Hans Zimmer. And <code>inception</code> is the anwser. <br>
+  Now we know why there was a <code>spin</code> tag:
+</p>
+<img src="../assets/img/spin.jpeg">
+<p>
+  So our result url will be: <br>
+  <code>http://18.198.170.188:80/inception</code>
+</p>
+<p>
+  If we go to this url we will see <br>
+  <a href="./inception.html">congratulations page</a> whith the link to the
+  Level 7
+  (
+    <a href="../lets-c-the-world/">task</a> /
+    <a href="../lets-c-the-world/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
