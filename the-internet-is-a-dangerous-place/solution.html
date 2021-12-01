@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 8</title>
+</head>
+<body>
+<h1>Level 8</h1>
+<h2>The internet is a dangerous place.</h2>
+<h3>Solution</h3>
+<p>
+  Here we go. We have some encoded structure. Let's take first row:
+</p>
+<pre>
+0000000 7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+</pre>
+<p>
+  This is definitive a <code>hex</code>. So we have:
+  <ul>
+    <li><code>0000000</code> - adress</li>
+    <li><code>7f ... 00</code> - value</li>
+  </ul>
+</p>
+<p>
+  like in any file if we open it with hex editor.
+</p>
+<p>
+  But what file type this is?
+</p>
+<p>The first bytes <code>45 4c 46</code> stands for <code>ELF</code>(Executable and Linkable Format). So this is  a binary.</p>
+<p>Let's convert it back with <a href="https://hexed.it/" target="_blank">any online hex editor</a>.</p>
+
+<ol>
+  <li>We need to remove <code>*</code> areas and fill them with <code>0</code></li>
+  <li>
+    Now we don't need addresses any more. <br/>
+    Remove them with <code>/^\d{7} $/</code> expression.
+    <a href="../assets/files/level8-full.hex.txt" download="level8.hex.txt">result</a>.
+  </li>
+  <li>Paste it into the editor.</li>
+  <li>Save as > Any place on your computer.</li>
+</ol>
+<p>
+  Now we have the <a href="../assets/files/level8.bin" download="level8.bin">binary</a>.
+</p>
+<p>
+  Now we can run it. But <u>the closer you get the more dangerous things will be</u>.
+</p>
+<p>
+  Let's figure out what this code does. I used <a href="https://www.hopperapp.com/">hooper</a> disassembler. <br>
+  The
+  <a href="../assets/files/level8.decompiled.c" download="level8.decompiled.c">result of decompilation</a>
+  is shown below.
+</p>
+<pre>
+int main() {
+  stack[-8] = r12;
+  stack[-16] = rbp;
+  stack[-24] = rbx;
+  rbx = 0x0;
+  rsp = rsp - 0xaa8;
+  var_908 = rep intrinsic_movsd(var_908, *0x400b40);
+  var_6F4 = rep intrinsic_movsd(var_6F4, *0x400d80);
+  do {
+    rdi = *(int32_t *)(rsp + rbx + 0x3b4);
+    rdi = rdi ^ *(int32_t *)(rsp + rbx + 0x1a0);
+    rbx = rbx + 0x4;
+    putchar(rdi);
+  } while (rbx != 0x214);
+  putchar(0x20);
+  getline(&var_AA8, &var_AA0, *stdin@@GLIBC_2.2.5);
+  if (strcmp(0x400b04, var_AA8) != 0x0) {
+    puts("You selected no. Quitting.");
+  }
+  else {
+    var_A98 = rep intrinsic_movsd(var_A98, *0x400fc0);
+    rbx = 0x0;
+    var_9D0 = rep intrinsic_movsd(var_9D0, *0x4010c0);
+    rbp = malloc(0x32);
+    do {
+      rdi = rbp + rbx;
+      rbx = rbx + 0x1;
+      sprintf(rdi, 0x400b22);
+    } while (rbx != 0x32);
+    rbx = 0xa;
+    rbp = system(rbp);
+    printf("Deleting all files...");
+    fflush(*stdout@@GLIBC_2.2.5);
+    do {
+      sleep(0x1);
+      putchar(0x2e);
+      fflush(*stdout@@GLIBC_2.2.5);
+      rbx = rbx - 0x1;
+    } while (rbx != 0x0);
+    rbx = 0x64;
+    do {
+      usleep(0x4e20);
+      putchar(0x2e);
+      fflush(*stdout@@GLIBC_2.2.5);
+      rbx = rbx - 0x1;
+    } while (rbx != 0x0);
+    COND = rbp == 0x0;
+    rbx = &var_4E0;
+    rbp = &var_27C;
+    if (!COND) {
+      *(int32_t *)rbx = rep intrinsic_movsd(*(int32_t *)rbx, *0x4011c0);
+      r12 = 0x0;
+      *(int32_t *)rbp = rep intrinsic_movsd(*(int32_t *)rbp, *0x4013c0);
+      do {
+        rdi = *(int32_t *)(rbp + r12);
+        rdi = rdi ^ *(int32_t *)(rbx + r12);
+        r12 = r12 + 0x4;
+        putchar(rdi);
+      } while (r12 != 0x1d4);
+    }
+    else {
+      *(int32_t *)rbx = rep intrinsic_movsd(*(int32_t *)rbx, *0x4015c0);
+      r12 = 0x0;
+      *(int32_t *)rbp = rep intrinsic_movsd(*(int32_t *)rbp, *0x401840);
+      do {
+        rdi = *(int32_t *)(rbp + r12);
+        rdi = rdi ^ *(int32_t *)(rbx + r12);
+        r12 = r12 + 0x4;
+        putchar(rdi);
+      } while (r12 != 0x264);
+    }
+  }
+  return 0x0;
+}
+</pre>
+In the code we see:
+<pre>
+if (!COND) {
+  ....
+}
+else {
+  ....
+}
+</pre>
+<p>
+  So <code>else</code> can never been executed. We also see that the programm will
+  try to delete all our files:
+</p>
+<pre>
+....
+rbp = system(rbp);
+printf("Deleting all files...");
+fflush(*stdout@@GLIBC_2.2.5);
+....
+</pre>
+<p>So let's run it on the empty virtual server. I had one, so I used it:</p>
+<video class="solution" src="../assets/files/level8.mov" autoplay loop></video>
+<p>The anwser is read this point in the code:</p>
+<pre>
+getline(&var_AA8, &var_AA0, *stdin@@GLIBC_2.2.5);
+</pre>
+<p>And will exit if we choose <code>no</code></p>
+<pre>
+if (strcmp(0x400b04, var_AA8) != 0x0) {
+  puts("You selected no. Quitting.");
+}
+</pre>
+<p>If we choose <code>yes</code> we still have unexecuted fragment:</p>
+<pre>
+else {
+  *(int32_t *)rbx = rep intrinsic_movsd(*(int32_t *)rbx, *0x4015c0);
+  r12 = 0x0;
+  *(int32_t *)rbp = rep intrinsic_movsd(*(int32_t *)rbp, *0x401840);
+  do {
+    rdi = *(int32_t *)(rbp + r12);
+    rdi = rdi ^ *(int32_t *)(rbx + r12);
+    r12 = r12 + 0x4;
+    putchar(rdi);
+  } while (r12 != 0x264);
+}
+</pre>
+<p>
+  So we need to change the binary. I decided to change the condition in if so
+  we will always jump to the <code>else</code> section of the code.
+</p>
+<p>
+  With help of hooper I found where the <code>if</code> locates and changed it. <br>
+  So <code>if</code> will be coded as <code>je</code> (jump if equal) assembler command. <br>
+  <a href="https://cheatography.com/jr-lambea/cheat-sheets/x86-hex-assembler-instructions/">
+    This cheatsheet</a> says it will be coded as <code>0x74</code>. <br>
+  We need to change it to unconditional jump - <code>jmp</code> (jump directly to). <br>
+  According to the cheatsheet - it will be <code>BE</code>. <br>
+  So here is diff:
+</p>
+<pre>
+142c142
+&lt; 00 00 EB 3B BE C0 11 40 00 B9 75 00 00 00 48 89
+---
+&gt; 00 00 74 3B BE C0 11 40 00 B9 75 00 00 00 48 89
+</pre>
+
+<p>
+  If you are interested:
+  <a href="../assets/files/level8.modified.hex.txt">modified hex</a>,
+  <a href="../assets/files/level8.modified.bin">modified binary</a>.
+</p>
+<p>
+  The anwser is printed in the console - <code>/whalespotting-of-a-different-kind</code>
+</p>
+<p>Let's run it again and see what hides inside the code:</p>
+<pre>
+Well, since we are inside a container, we skipped the deletion. 🙂 Docker FTW!
+To solve this level, go to '/inside-the-docker-matrix'. See you there!
+</pre>
+<p>Fuck. So we just need to execute it inside the <u>docker</u>. Ok. Cool.</p>
+<p>If you interested how they check if the code is inside the docker, there are minimum two ways:</p>
+<ul>
+  <li>There is a <code>.dockerenv</code> file</li>
+  <li>
+    Check <code>/proc/1/cgroup</code>. <br>
+    It will tell you the control groups of the init process,<br>
+    and when you are not in a container, <br>
+    that will be <code>/</code> for all hierarchies. <br>
+    When you are inside a container, <br> you will see the name of the anchor point. <br>
+    With Docker, it will be something like <code>/docker/&lt;containerid&gt;</code>.</li>
+</ul>
+<p>
+  So our result url will be: <br>
+  <code>http://18.198.170.188:80/inside-the-docker-matrix</code>
+</p>
+
+
+<p>
+  If we go to this url we will see <br>
+  <a href="./inside-the-docker-matrix.html">congratulations page</a>
+  whith the link to the Level 9
+  (
+    <a href="../dedicated-to-a-famous-sam">task</a> /
+    <a href="../dedicated-to-a-famous-sam/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>

@@ -7,26 +7,26 @@ body {
     align-items: center;
 }
 
-p, img.solution {
+p, *.solution {
     max-width: 780px;
+}
+
+
+pre, code {
+    background-color: #003B00;
+    color: #00FF41;
+    font-family: monospace;
+    padding: 2em 3em 2em 3em;
+    max-width: 80%;
+    white-space: pre-wrap;
 }
 
 p {
     text-align: center;
 }
 
-p code {
+* code {
     padding: 0px 10px;
-}
-
-pre, code {
-    background-color: #003B00;
-    color: #00FF41;
-    font-family: monospace;
-
-    padding: 2em 3em 2em 3em;
-    max-width: 80%;
-    white-space: pre-wrap;
 }
 
 a:link {
