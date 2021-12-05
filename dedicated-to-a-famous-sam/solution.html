@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 9</title>
+</head>
+<body>
+<h1>Level 9</h1>
+<h2>Dedicated to a Famous Sam</h2>
+<h3>Solution</h3>
+<p>
+  So, we have new task description. <br>When we click on the link description we
+  get empty page with <code>0</code> or <code>1</code>. <br>
+  The url of the page is <code>/this-was-way-too-easy-until-now</code>
+</p>
+<p>
+  When we refresh the page - number changes.
+</p>
+<p>
+  So let's write simple script to download all numbers to a file.
+</p>
+<p>
+  We don't know how many they are, so let's take first 5000.
+</p>
+<pre>
+#!/bin/bash
+n="1"
+touch binary.txt
+while [ $n -lt 50000 ]
+do
+  curl "http://18.198.170.188/this-was-way-too-easy-until-now" >> binary.txt
+  n=$[$n+1]
+done
+echo "5000 entries done."
+</pre>
+<p>
+  And run it. If we open result <a href="../assets/files/level9-binary.txt" download="binary.txt">file</a>. We see:
+</p>
+<pre>
+1100000111110 ... 0000000000000001111111111111110000011111
+</pre>
+<p>First my thougt was that this is a binery text, but this asumption was false.</p>
+<p>
+  If we look closer we can see patern:
+</p>
+<pre>
+  00000000000000000000000000000000000 ... 00000000000000000000000000000000000
+</pre>
+<p>
+  We have some long sections in size of <code>35x0</code>. <br>
+  But there is also section with <code>34x0</code> or <code>36x0</code>. <br>
+  So we need to tolerate errors.
+</p>
+<p>
+  Let's split the file in line, that begins with <code>~35x0</code>:
+</p>
+<pre>
+00000000000000000000000000000000000111111111111111000000 ...
+000000000000000000000000000000000011111111111111100000 ...
+0000000000000000000000000000000000011111111111111100000 ...
+</pre>
+<p>
+  Here is a <a href="../assets/files/level9-binary-formated.txt" download="formated.txt">full file</a>
+</p>
+<p>
+  Now we cann see the pattern in details. <br>
+  And we can correct errors with majority of votes. <br>
+  So if we have situation that one string has <code>34x0</code> and other two have <code>35x0</code> <br>
+  we will correct the one with <code>34x0</code>. <br>
+  At the end we will have 3 indentical strings.
+</p>
+<p> Here is <a href="../assets/files/level9-error-free.txt" download="error-free.txt">error free file</a> </p>
+<p>
+  Now let's take one string and analyze futher. <br>
+  We have another long fragment of <code>15x0</code>. <br>
+  Let's split file by these fragments:
+</p>
+<pre>
+00000000000000000000
+00000000000000011111111111111100000111110000011111000001111111111111110000011111
+0000000000000001111100000111111111111111000001111111111111110000011111
+00000000000000011111000001111111111111110000011111
+0000000000000001111111111111110000011111111111111100000111111111111111
+0000000000000001111100000111111111111111000001111111111111110000011111
+0000000000000001111100000111110000011111
+000000000000000111110000011111000001111111111111110000011111
+0000000000000001111111111111110000011111111111111100000111111111111111
+00000000000000011111000001111111111111110000011111
+00000000000000011111111111111100000111110000011111
+000000000000000111110000011111000000000000000111111111111111
+0000000000000001111100000111110000011111
+0000000000000001111100000111111111111111
+0000000000000001111111111111110000011111
+00000000000000011111111111111100000111110000011111
+00000000000000011111111111111100000111110000011111
+0000000000000001111100000111111111111111
+00000000000000011111000001111100000111110000011111
+0000000000000001111100000111110000011111
+</pre>
+<p>
+  The pattern for <code>0</code>  is now more understandable:
+</p>
+<ul>
+  <li><code>35x0</code> - Begin of Transaction</li>
+  <li><code>15x0</code> - Begin of Fragment</li>
+  <li><code>5x0</code> - Separator</li>
+</ul>
+<p>
+  We  have only two types of <code>1</code>:
+</p>
+<ul>
+  <li><code>15x1</code>  - long one and </li>
+  <li><code>5x1</code>  - short one</li>
+</ul>
+<p>
+  The long and short fragments can stand for <code>-</code> and <code>.</code> in morse encoding.
+</p>
+<p>
+  Let's try to replace (F - Fragment):
+</p>
+<pre>
+  Begin of Transaction
+  F: -..-.
+  F: .--.
+  F: .-.
+  F: ---
+  F: .--.
+  F: ...
+  F: ..-.
+  F: ---
+  F: .-.
+  F: -..
+  F: ..
+  F: -
+  F: ...
+  F: .-
+  F: -.
+  F: -..
+  F: -..
+  F: .-
+  F: ....
+  F: ...
+</pre>
+<p>Here is <a href="../assets/files/level9-message.txt" download="message.txt">clean message</a> </p>
+<p>
+  Now we will take <a href="https://morsedecoder.com/de/" target="_blank">any online morse decoder</a>
+</p>
+<p>
+  The anwser is decoded, but we need to convert it to lowercase because the
+  system accept only lowercase keys. - <code>/propsforditsanddahs</code>
+</p>
+<p>
+  So our result url will be: <br>
+  <code>http://18.198.170.188:80/propsforditsanddahs</code>
+</p>
+<p>
+  If we go to this url we will see <br>
+  <a href="./propsforditsanddahs.html">congratulations page</a>
+  whith the link to the Level 10
+  (
+    <a href="../this-is-hollywood-we-are-calling-you/">task</a> /
+    <a href="../this-is-hollywood-we-are-calling-you/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
