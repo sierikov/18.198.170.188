@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 10</title>
+</head>
+<body>
+<h1>Level 10</h1>
+<h2>This is Hollywood we are calling you</h2>
+<h3>Solution</h3>
+
+<p>
+  We see an error, it says: <code>Missing parameter ?callbackDomain</code>.<br>
+  So let's add it to our url.
+</p>
+
+<pre>http://18.198.170.188/this-is-hollywood-we-are-calling-you?callbackDomain=google.com</pre>
+
+<p>
+  Now we have another error:
+</p>
+
+<pre>
+  Could not connect to your endpoint at
+  https://google.com/add
+  ?a=304200972448620530645069240248291931164
+  &b=32662422308137202040109741665765070137
+</pre>
+
+<p>
+  So the service will call <code>/add</code> endpoint with <code>a</code>
+  and <code>b</code> url-parameters. Each of them contains <code>BigInt</code>.
+  And I assume we should add them together and send it back to the server.
+</p>
+
+<p>
+  So let's write simpe server that adds two big numbers together.
+</p>
+
+<pre>
+{
+  "name": "level10",
+  "version": "1.0.0",
+  "description": "Service for sum a and b",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sierikov",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
+</pre>
+
+<p> So I have only <code>express</code>. Now we need <code>app.js</code> file. </p>
+<p>Init the express and take port to run on from the enviroment:</p>
+
+<pre>
+const express = require("express");
+
+const app = express();
+const port = process.env.PORT || 443;
+</pre>
+
+<p>Activate listening: </p>
+
+<pre>
+app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
+});
+</pre>
+
+<p>
+  Define endpoint wich tage <code>a</code> and <code>b</code> and send
+  the anwser as string back to the server.
+</p>
+
+<pre>
+app.get("/add", function (req, res) {
+  let a = req.query?.a
+  let b = req.query?.b
+  res.send(`${a + b}`);
+  console.log(`Got a: ${a}, b: ${b}`);
+});
+</pre>
+<p>
+But, we have trouble that <code>JS</code> will round our numbers in exponential form.
+</p>
+<pre>
+app.get("/add", function (req, res) {
+  let a = BigInt(req.query?.a);
+  let b = BigInt(req.query?.b);
+  res.send(`${a + b}`);
+  console.log(`Got a: ${a}, b: ${b}`);
+});
+</pre>
+<p>
+  So we need to wrap our <code>a</code> and <code>b</code> with <code>BigInt</code>
+  constructor.
+</p>
+<p>
+  Let's check if this works.
+</p>
+<ol>
+  <li>Run the server <code>npm start</code></li>
+  <li>Execute <code>http://localhost:443/add?a=2&b=4</code></li>
+  <li>Got <code>6</code></li>
+</ol>
+<p>Here you can download the <a href="../assets/files/level10-server.zip" download="node-server">full source code</a>.</p>
+<p>We cannot give just IP adress of our network as <code>callbackDomain</code></p>
+<p>We need to get one.</p>
+<p>I have found three services to expose our local Node.js app to the world:</p>
+<ul>
+  <li>localtunnel.me - i will use this one</li>
+  <li>ngrok</li>
+  <li>Zeit's now</li>
+</ul>
+<p>
+  Install: <code>npm install -g localtunnel</code><br>
+  Start the app: <code>npm start</code><br>
+  Expose: <code>lt --port 443</code>
+</p>
+<p>We get <code>perfect-swan-72.loca.lt</code> and will pass it to the website.</p>
+<pre>
+  Calling https://perfect-swan-72.loca.lt/add?a=27850060344159548346000990344376658296
+  &b=89380160078435183319458195098204483639
+
+  Congratulations, you returned the correct sum
+  27850060344159548346000990344376658296 + 89380160078435183319458195098204483639
+  === 117230220422594731665459185442581141935
+
+  Find the next level at lets-go-to-the-movies.mp4
+</pre>
+<p>
+  So our result url will be: <br>
+  <code>http://18.198.170.188:80/lets-go-to-the-movies.mp4</code>
+</p>
+<p>
+  If we go to this url we will see Level 11
+  (
+    <a href="../lets-go-to-the-movies.mp4/">task</a> /
+    <a href="../lets-go-to-the-movies.mp4/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
