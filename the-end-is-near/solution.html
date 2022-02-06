@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 12</title>
+</head>
+<body>
+<h1>Level 12</h1>
+<h2>The end is near</h2>
+<h3>Solution</h3>
+<p>
+  We have a big hint about this task in the description: <b>dig</b> deep.
+</p>
+<p>
+  <code>dig</code> is a util to lookup the dns domain properties.
+</p>
+<p>
+  We have a domain: <code>code-quest.devboost.com</code>. <br> so let's check
+  its <code>TXT</code> field with help of:
+</p>
+<pre>
+  dig -t txt example.com +short
+</pre>
+<p>
+  <code>+short</code> is used for minified output.
+</p>
+<p>
+  So our result is: <code>/you-are-a-finisher</code>
+</p>
+<p>
+  After that you just need to submit your e-mail to recieve a prize. I got
+  just a cup.
+</p>
+
+<p><a href="../">Back</a></p>

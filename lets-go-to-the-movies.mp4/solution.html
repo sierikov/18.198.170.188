@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles.css">
+<title>Code Quest - Level 11</title>
+</head>
+<body>
+<h1>Level 11</h1>
+<h2>Let's go to the movies</h2>
+<h3>Solution</h3>
+<p>
+  We have nothing but a video file encoded in a <code>base64</code> inside the
+  HTML page.
+</p>
+<p>
+  If we play it will show a bunch of text images.
+</p>
+<p>
+  On the first frame we see Java class that has name <code>RunMe</code>.
+</p>
+<p>
+  We need to run the whole class to recieve the anwser. <br> We cannot use brutforce
+  to crack the url, because the number is too high.
+</p>
+<p>
+  In the metadata of the file we can find the framerate. It is <code>20</code>
+  frames per second.
+</p>
+<p>
+  Let's split the video into list of images with:
+</p>
+<pre>
+  ffmpeg -i video.mp4 out%d.jpg -hide_banner
+</pre>
+<p>
+  We will recieve all frames as images with resolution of <code>2800x1170</code> pixels.
+  <br> For example the 31st frame looks like:
+</p>
+<img class="solution" src="../assets/img/out31.png" alt="">
+<p>
+  Here you can download <a href="../assets/files/level11.zip" download="level11-frames.zip">all frames</a>.
+</p>
+<p>
+  But the most part of the frame is black. Also we need to think out the solution
+  to recognize and convert monospace characters to text. So let's resize the image
+  and put each letter to the box <code>36x25</code> pixels like below:
+</p>
+<img class="solution" src="../assets/img/level11.png" alt="">
+<p>
+  Each letter consist of "big" pixels <code>5x5</code>. So we need to downgrade
+  the quality in 5 times. So each pixel in the letter will be equal to one
+  physical pixel.
+</p>
+<p>
+  So lets write a script that takes an image and outputs it's text.
+</p>
+<ol>
+  <li>Read the image</li>
+  <li>Convert to w/b mode</li>
+  <li>Move "box" through the image</li>
+  <li>Convert box to 0-1 matrix</li>
+  <li>Compare the matrix with already know</li>
+  <li>If no one matches print out the foun</li>
+</ol>
+<p>
+  For example letter <code>e</code> will be converted to:
+</p>
+<pre>
+  [
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0],
+  [0, 1, 0, 0, 0, 1, 0],
+  [0, 1, 1, 1, 1, 1, 0],
+  [0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 1, 1, 1, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0]
+  ]
+</pre>
+<p>
+  Here you can download <a href="../assets/files/level11.py" download="ocr.py">full code</a>.
+  Usage: <code>ocr.py &lt;start&gt; &lt;end&gt;</code>.
+</p>
+<p>
+  After we run the script on each frame we will have file with some errors.
+  We need to fix unknown letters. And after that we have
+  <a href="../assets/files/RunMe.java" download="RunMe.java">clean file</a>, that we
+  can run. And this is our putput in the console:
+</p>
+<pre>
+  url: /5987001076
+</pre>
+<p>
+  If we go to this url we will see
+  <a href="5987001076.html">congratulations page</a> <br>
+  whith the link to the Level 12
+  (
+    <a href="../the-end-is-near/">task</a> /
+    <a href="../the-end-is-near/solution.html">solution</a>
+  )
+</p>
+<p><a href="../">Back</a></p>
+</body>
+</html>
